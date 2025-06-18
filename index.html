@@ -277,7 +277,7 @@
             const scoreElement = document.getElementById(`score${currentLine}`);
             let currentScore = parseInt(scoreElement.innerText);
             const historyElement = document.getElementById(`history${currentLine}`);
-            let historyItem = `Lần thay đổi: ${currentScore}`;
+            let historyItem = `${currentScore}`;
 
             if (currentOperation === 'subtract') {
                 currentScore -= inputNumber;

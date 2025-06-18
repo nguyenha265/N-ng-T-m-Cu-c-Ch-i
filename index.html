@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nâng Tầm Cuộc Chơi</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+        .line {
+            display: flex;
+            align-items: center;
+            height: 25%;
+            padding: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            background: white;
+            margin: 10px 0;
+            border-radius: 10px;
+        }
+        .button {
+            width: 25%; /* Mỗi nút chiếm 1/4 chiều rộng của dòng */
+            height: 100%; /* Chiếm toàn bộ chiều cao của dòng */
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            color: white; /* Màu chữ trắng */
+            margin-right: 10px; /* Khoảng cách giữa các nút */
+            font-size: 100px; /* Kích thước chữ */
+            border-radius: 5px; /* Bo góc */
+            transition: background-color 0.3s;
+        }
+        .button.red {
+            background-color: lightcoral; /* Nền đỏ nhạt */
+        }
+        .button.red:hover {
+            background-color: coral; /* Màu khi hover */
+        }
+        .button.blue {
+            background-color: lightblue; /* Nền lam */
+        }
+        .button.blue:hover {
+            background-color: deepskyblue; /* Màu khi hover */
+        }
+        .info {
+            flex: 1; /* Chiếm phần còn lại */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 50%; /* Chiếm 1/2 chiều rộng tổng thể */
+        }
+        .name {
+            font-size: 30px; /* Kích thước chữ cho ô nhập */
+            margin: 10px 0;
+            text-align: center;
+            max-width: 200px; /* Giới hạn chiều rộng */
+            padding: 10px; /* Padding cho ô nhập */
+            border: none; /* Bỏ viền */
+            outline: none; /* Bỏ viền khi focus */
+            transition: color 0.3s;
+        }
+        .score {
+            font-size: 52px; /* Kích thước chữ cho điểm số */
+            text-align: center;
+            color: green; /* Mặc định màu xanh lá */
+        }
+        /* Popup */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            z-index: 1000;
+            width: 300px;
+            text-align: center;
+        }
+        .popup input {
+            width: 80%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            outline: none; /* Bỏ viền khi focus */
+        }
+        .popup button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            margin: 5px;
+            cursor: pointer;
+            color: white;
+            transition: background-color 0.3s;
+        }
+        .confirm {
+            background-color: #28a745; /* Màu xanh lá */
+        }
+        .confirm:hover {
+            background-color: #218838;
+        }
+        .cancel {
+            background-color: #dc3545; /* Màu đỏ */
+        }
+        .cancel:hover {
+            background-color: #c82333;
+        }
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+        .history {
+            margin-top: 10px;
+            text-align: left;
+            max-height: 100px;
+            overflow-y: auto;
+            width: 80%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            background: #f9f9f9;
+        }
+        .history-item {
+            padding: 5px;
+            border-bottom: 1px solid #ccc;
+        }
+        .history-popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            z-index: 1000;
+            width: 300px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .delete-button {
+            background-color: red;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 30px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="line">
+        <button class="button red" onclick="showPopup('subtract', 0)">-</button>
+        <button class="button blue" onclick="showPopup('add', 0)">+</button>
+        <div class="info">
+            <input class="name" type="text" maxlength="8" style="color: rgb(205, 139, 201);" placeholder="Name" onchange="saveState(0)" />
+            <div class="score" id="score0">0</div>
+            <button onclick="showHistory(0)">Lịch sử</button>
+            <div class="history" style="display: none;" id="history0"></div>
+        </div>
+    </div>
+
+    <div class="line">
+        <button class="button red" onclick="showPopup('subtract', 1)">-</button>
+        <button class="button blue" onclick="showPopup('add', 1)">+</button>
+        <div class="info">
+            <input class="name" type="text" maxlength="8" style="color:rgb(10, 66, 122);" placeholder="Name" onchange="saveState(1)" />
+            <div class="score" id="score1">0</div>
+            <button onclick="showHistory(1)">Lịch sử</button>
+            <div class="history" style="display: none;" id="history1"></div>
+        </div>
+    </div>
+
+    <div class="line">
+        <button class="button red" onclick="showPopup('subtract', 2)">-</button>
+        <button class="button blue" onclick="showPopup('add', 2)">+</button>
+        <div class="info">
+            <input class="name" type="text" maxlength="8" style="color: red; placeholder="Name" onchange="saveState(2)" />
+            <div class="score" id="score2">0</div>
+            <button onclick="showHistory(2)">Lịch sử</button>
+            <div class="history" style="display: none;" id="history2"></div>
+        </div>
+    </div>
+
+    <div class="line">
+        <button class="button red" onclick="showPopup('subtract', 3)">-</button>
+        <button class="button blue" onclick="showPopup('add', 3)">+</button>
+        <div class="info">
+            <input class="name" type="text" maxlength="8" style="color: #28a745; placeholder="Name" onchange="saveState(3)" />
+            <div class="score" id="score3">0</div>
+            <button onclick="showHistory(3)">Lịch sử</button>
+            <div class="history" style="display: none;" id="history3"></div>
+            <button class="delete-button" onclick="confirmDelete()">X</button>
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+    <div class="popup" id="popup">
+        <input type="number" id="inputNumber" value="0" placeholder="Nhập số" />
+        <button class="confirm" onclick="confirmAction()">Xác nhận</button>
+        <button class="cancel" onclick="closePopup()">Hủy</button>
+    </div>
+
+    <div class="history-popup" id="historyPopup">
+        <h3>Lịch sử thay đổi</h3>
+        <div id="historyContent"></div>
+        <button class="cancel" onclick="closeHistory()">Đóng</button>
+    </div>
+
+    <div class="popup" id="deletePopup" style="display:none;">
+        <p>Bạn có chắc chắn muốn xóa tất cả dữ liệu không?</p>
+        <button class="confirm" onclick="deleteCookies()">Xóa</button>
+        <button class="cancel" onclick="closeDeletePopup()">Hủy</button>
+    </div>
+
+    <script>
+        let currentLine = null;
+        let currentOperation = null;
+        const historyData = [[], [], [], []]; // Mảng lưu lịch sử cho từng dòng
+
+        // Load trạng thái từ cookie
+        window.onload = function() {
+            const savedData = JSON.parse(getCookie("scoreData") || "[]");
+            savedData.forEach((data, index) => {
+                if(data) {
+                    document.getElementById(`score${index}`).innerText = data.score;
+                    document.getElementById(`history${index}`).innerHTML = data.history.map(item => `<div class="history-item">${item}</div>`).join('');
+                    document.querySelectorAll('.name')[index].value = data.name;
+                }
+            });
+        };
+
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+        }
+
+        function showPopup(operation, lineIndex) {
+            document.getElementById('inputNumber').value = 0;
+            currentLine = lineIndex;
+            currentOperation = operation;
+            document.getElementById('overlay').style.display = 'block';
+            document.getElementById('popup').style.display = 'block';
+        }
+
+        function closePopup() {
+            document.getElementById('overlay').style.display = 'none';
+            document.getElementById('popup').style.display = 'none';
+            document.getElementById('inputNumber').value = 0;
+        }
+
+        function confirmAction() {
+            const inputNumber = parseInt(document.getElementById('inputNumber').value);
+            const scoreElement = document.getElementById(`score${currentLine}`);
+            let currentScore = parseInt(scoreElement.innerText);
+            const historyElement = document.getElementById(`history${currentLine}`);
+            let historyItem = `Lần thay đổi: ${currentScore}`;
+
+            if (currentOperation === 'subtract') {
+                currentScore -= inputNumber;
+                historyItem += ` - ${inputNumber}`;
+            } else if (currentOperation === 'add') {
+                currentScore += inputNumber;
+                historyItem += ` + ${inputNumber}`;
+            }
+
+            scoreElement.innerText = currentScore;
+            scoreElement.style.color = currentScore < 0 ? 'red' : 'green';
+            historyData[currentLine].push(historyItem);
+            historyElement.innerHTML = historyData[currentLine].map(item => `<div class="history-item">${item}</div>`).join('');
+
+            // Lưu vào cookie
+            saveState(currentLine);
+
+            closePopup();
+        }
+
+        function showHistory(lineIndex) {
+            const historyContent = document.getElementById('historyContent');
+            historyContent.innerHTML = ''; // Xóa nội dung cũ
+
+            historyData[lineIndex].forEach((score, index) => {
+                const item = document.createElement('div');
+                item.textContent = `Lần ${index + 1}: ${score}`;
+                historyContent.appendChild(item);
+            });
+
+            document.getElementById('historyPopup').style.display = 'block';
+            document.getElementById('overlay').style.display = 'block';
+        }
+
+        function closeHistory() {
+            document.getElementById('historyPopup').style.display = 'none';
+            closePopup();
+        }
+
+        function saveState(lineIndex) {
+            const name = document.querySelectorAll('.name')[lineIndex].value;
+            const score = document.getElementById(`score${lineIndex}`).innerText;
+            const history = historyData[lineIndex];
+
+            const state = {
+                name,
+                score,
+                history
+            };
+
+            // Lưu vào cookie
+            const savedData = JSON.parse(getCookie("scoreData") || "[]");
+            savedData[lineIndex] = state;
+            document.cookie = `scoreData=${JSON.stringify(savedData)}; path=/;`;
+        }
+
+        function confirmDelete() {
+            document.getElementById('deletePopup').style.display = 'block';
+            document.getElementById('overlay').style.display = 'block';
+        }
+
+        function closeDeletePopup() {
+            document.getElementById('deletePopup').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        }
+
+        function deleteCookies() {
+            document.cookie = "scoreData=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            location.reload(); // Tải lại trang
+        }
+    </script>
+
+</body>
+</html>

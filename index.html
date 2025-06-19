@@ -225,7 +225,7 @@
 
     <div class="overlay" id="overlay"></div>
     <div class="popup" id="popup">
-        <input type="number" style="height: 100px; font-size: 90px" id="inputNumber" value="0" placeholder="Nhập số" />
+        <input type="number" style="height: 100px; font-size: 90px" id="inputNumber" placeholder="Nhập số" />
         <button class="confirm" onclick="confirmAction()">Xác nhận</button>
         <button class="cancel" onclick="closePopup()">Hủy</button>
     </div>
@@ -265,8 +265,7 @@
             if (parts.length === 2) return parts.pop().split(';').shift();
         }
 
-        function showPopup(operation, lineIndex) {
-            document.getElementById('inputNumber').value = 0;
+        function showPopup(operation, lineIndex) 
             currentLine = lineIndex;
             currentOperation = operation;
             document.getElementById('overlay').style.display = 'block';

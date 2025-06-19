@@ -225,7 +225,7 @@
 
     <div class="overlay" id="overlay"></div>
     <div class="popup" id="popup">
-        <input type="number" id="inputNumber" value="0" placeholder="Nhập số" />
+        <input type="number" style="height: 100px; font-size: 90px" id="inputNumber" value="0" placeholder="Nhập số" />
         <button class="confirm" onclick="confirmAction()">Xác nhận</button>
         <button class="cancel" onclick="closePopup()">Hủy</button>
     </div>
@@ -277,7 +277,7 @@
         function closePopup() {
             document.getElementById('overlay').style.display = 'none';
             document.getElementById('popup').style.display = 'none';
-            document.getElementById('inputNumber').value = 0;
+            document.getElementById('inputNumber').value = '';
         }
 
         function confirmAction() {
@@ -287,10 +287,10 @@
             const historyElement = document.getElementById(`history${currentLine}`);
             let historyItem = `${currentScore}`;
 
-            if (currentOperation === 'subtract') {
+            if (currentOperation === 'subtract' && !isNaN(inputNumber)) {
                 currentScore -= inputNumber;
                 historyItem += ` - ${inputNumber}`;
-            } else if (currentOperation === 'add') {
+            } else if (currentOperation === 'add' && !isNaN(inputNumber)) {
                 currentScore += inputNumber;
                 historyItem += ` + ${inputNumber}`;
             }

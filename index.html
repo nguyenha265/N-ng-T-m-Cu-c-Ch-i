@@ -10,7 +10,7 @@
             flex-direction: column;
             margin: 0;
             padding: 0;
-            height: 72vh;
+            height: 68vh;
             font-family: Arial, sans-serif;
             background-color: #f0f0f0;
         }
@@ -21,7 +21,7 @@
             padding: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             background: white;
-            margin: 10px 0;
+            margin: 10px 10px;
             border-radius: 10px;
         }
         .button {
@@ -165,18 +165,27 @@
             height: 30px;
             cursor: pointer;
             position: absolute;
-            top: 10px;
-            right: 10px;
+            top: 95px;
+            right: 20px;
         }
         input::-webkit-outer-spin-button,
         input::-webkit-inner-spin-button {
         -webkit-appearance:none;
             margin:0;
         }
+        .notification {
+            padding: 10px;
+            color: white;
+            font-size: 35px;
+            text-align: center;
+            border-radius: 5px;
+            margin: 8px;
+        }
+
     </style>
 </head>
 <body>
-
+    <div id="scoreNotification" class="notification"></div>
     <div class="line">
         <button class="button red" onclick="showPopup('subtract', 0)">-</button>
         <button class="button blue" onclick="showPopup('add', 0)">+</button>
@@ -256,6 +265,7 @@
                     document.querySelectorAll('.name')[index].value = data.name;
                 }
             });
+            sum();
         };
 
         function getCookie(name) {
@@ -297,7 +307,7 @@
             scoreElement.style.color = currentScore < 0 ? 'red' : 'green';
             historyData[currentLine].push(historyItem);
             historyElement.innerHTML = historyData[currentLine].map(item => `<div class="history-item">${item}</div>`).join('');
-
+            sum();
             // Lưu vào cookie
             saveState(currentLine);
 
@@ -354,6 +364,26 @@
             document.cookie = "scoreData=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
             location.reload(); // Tải lại trang
         }
+
+        function sum() {
+            let result = 0;
+            let notification = document.getElementById('scoreNotification');
+            const score = parseInt(document.getElementById('score0').innerText);
+            const score1 = parseInt(document.getElementById('score1').innerText);
+            const score2 = parseInt(document.getElementById('score2').innerText);
+            const score3 = parseInt(document.getElementById('score3').innerText);
+            result = score + score1 + score2 + score3;
+        if (result > 0) {
+            notification.textContent = result;
+            notification.style.background = '#28a745';
+        } else if (result < 0) {
+            notification.textContent = result;
+            notification.style.background = '#dc3545';
+        } else {
+            notification.textContent = result;
+            notification.style.background = '#28a745';
+        }
+    }
     </script>
 
 </body>

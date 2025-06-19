@@ -265,7 +265,7 @@
             if (parts.length === 2) return parts.pop().split(';').shift();
         }
 
-        function showPopup(operation, lineIndex) 
+        function showPopup(operation, lineIndex) {
             currentLine = lineIndex;
             currentOperation = operation;
             document.getElementById('overlay').style.display = 'block';

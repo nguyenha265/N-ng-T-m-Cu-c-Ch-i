@@ -4,13 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nâng Tầm Cuộc Chơi</title>
+    <link rel="icon" type="image/x-icon" href="https://scontent.fhan2-3.fna.fbcdn.net/v/t39.30808-6/558276740_24631198143185808_9183641675087629860_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=a5f93a&_nc_eui2=AeGeMftwr1aKqioxgeN3mfjeaElZlw9zVB9oSVmXD3NUH-qzRBx8x2aUJHIVc7izSN4zuOIqdbRAotZQehWa68Wc&_nc_ohc=zFS7yB-suLgQ7kNvwEYUqTR&_nc_oc=Adn-OIRJ0UPzorpzHSdSN2xGoqZEqTgkKHwac-bihaG7yrj1PC4rGmgBeKDaY2ChNn4&_nc_zt=23&_nc_ht=scontent.fhan2-3.fna&_nc_gid=7dcxLDwZFgpJpY7GTCoWGw&oh=00_AfsPOQSpT_QT950L4yvJZp6GBf4EUuRNZDv9WDYqOW7bhw&oe=6998EA1F">
     <style>
         body {
             display: flex;
             flex-direction: column;
             margin: 0;
             padding: 0;
-            height: 62vh;
+            height: 68vh;
             font-family: Arial, sans-serif;
             background-color: #f0f0f0;
         }
@@ -32,7 +33,7 @@
             cursor: pointer;
             color: white; 
             margin-right: 10px; 
-            font-size: 60px; 
+            font-size: 100px; 
             border-radius: 5px; 
             transition: background-color 0.3s;
         }
@@ -182,9 +183,106 @@
             margin: 8px;
         }
 
+        .historyContent div {
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+            padding: 5px;
+            margin: 5px;
+            border-radius: 3px;
+        }
+        
+        @-webkit-keyframes snowflakes-fall {
+            0% {top:-10%}
+            100% {top:100%}
+        }
+        @-webkit-keyframes snowflakes-shake {
+            0%,100% {-webkit-transform:translateX(0);transform:translateX(0)}
+            50% {-webkit-transform:translateX(80px);transform:translateX(80px)}
+        }
+        @keyframes snowflakes-fall {
+            0% {top:-10%}
+            100% {top:100%}
+        }
+        @keyframes snowflakes-shake {
+            0%,100%{ transform:translateX(0)}
+            50% {transform:translateX(80px)}
+        }
+
+        .snowflake {
+            color: #fff;
+            font-size: 1em;
+            font-family: Arial, sans-serif;
+            text-shadow: 0 0 5px #000;
+            position:fixed;
+            top:-10%;
+            z-index:9999;
+            -webkit-user-select:none;
+            -moz-user-select:none;
+            -ms-user-select:none;
+            user-select:none;
+            cursor:default;
+            -webkit-animation-name:snowflakes-fall,snowflakes-shake;
+            -webkit-animation-duration:10s,3s;
+            -webkit-animation-timing-function:linear,ease-in-out;
+            -webkit-animation-iteration-count:infinite,infinite;
+            -webkit-animation-play-state:running,running;
+            animation-name:snowflakes-fall,snowflakes-shake;
+            animation-duration:10s,3s;
+            animation-timing-function:linear,ease-in-out;
+            animation-iteration-count:infinite,infinite;
+            animation-play-state:running,running;
+        }
+        .snowflake:nth-of-type(0){
+            left:1%;-webkit-animation-delay:0s,0s;animation-delay:0s,0s
+        }
+        .snowflake:nth-of-type(1){
+            left:10%;-webkit-animation-delay:1s,1s;animation-delay:1s,1s
+        }
+        .snowflake:nth-of-type(2){
+            left:20%;-webkit-animation-delay:6s,.5s;animation-delay:6s,.5s
+        }
+        .snowflake:nth-of-type(3){
+            left:30%;-webkit-animation-delay:4s,2s;animation-delay:4s,2s
+        }
+        .snowflake:nth-of-type(4){
+            left:40%;-webkit-animation-delay:2s,2s;animation-delay:2s,2s
+        }
+        .snowflake:nth-of-type(5){
+            left:50%;-webkit-animation-delay:8s,3s;animation-delay:8s,3s
+        }
+        .snowflake:nth-of-type(6){
+            left:60%;-webkit-animation-delay:6s,2s;animation-delay:6s,2s
+        }
+        .snowflake:nth-of-type(7){
+            left:70%;-webkit-animation-delay:2.5s,1s;animation-delay:2.5s,1s
+        }
+        .snowflake:nth-of-type(8){
+            left:80%;-webkit-animation-delay:1s,0s;animation-delay:1s,0s
+        }
+        .snowflake:nth-of-type(9){
+            left:90%;-webkit-animation-delay:3s,1.5s;animation-delay:3s,1.5s
+        }
+        .snowflake:nth-of-type(10){
+            left:25%;-webkit-animation-delay:2s,0s;animation-delay:2s,0s
+        }
+        .snowflake:nth-of-type(11){
+            left:65%;-webkit-animation-delay:4s,2.5s;animation-delay:4s,2.5s
+        }
     </style>
 </head>
 <body>
+  <div id="snowflake">
+  <div class="snowflake">🌸</div>
+  <div class="snowflake">🏵️</div>
+  <div class="snowflake">🌸</div>
+  <div class="snowflake">🏵️</div>
+  <div class="snowflake">🌸</div>
+  <div class="snowflake">🏵️</div>
+  <div class="snowflake">🌸</div>
+  <div class="snowflake">🏵️</div>
+  <div class="snowflake">🌸</div>
+  <div class="snowflake">🏵️</div>
+  <div class="snowflake">🌸</div>
+  <div class="snowflake">🏵️</div>
     <div id="scoreNotification" class="notification"></div>
     <div class="line">
         <button class="button red" onclick="showPopup('subtract', 0)">-</button>
@@ -238,10 +336,10 @@
         <button class="cancel" onclick="closePopup()">Hủy</button>
     </div>
 
-    <div class="history-popup" id="historyPopup">
-        <h3>Lịch sử thay đổi</h3>
+    <div class="history-popup" id="historyPopup" style="padding: 15px;">
+        <h3 style="margin: 1px;">Lịch sử thay đổi</h3>
         <div id="historyContent"></div>
-        <button class="cancel" onclick="closeHistory()">Đóng</button>
+        <button class="cancel" onclick="closeHistory()" style="margin: 5px;">Đóng</button>
     </div>
 
     <div class="popup" id="deletePopup" style="display:none;">
@@ -314,15 +412,31 @@
             closePopup();
         }
 
-        function showHistory(lineIndex) {
+        function showHistory(lineIndex) {            
             const historyContent = document.getElementById('historyContent');
             historyContent.innerHTML = ''; // Xóa nội dung cũ
-
-            historyData[lineIndex].forEach((score, index) => {
+            const savedData = JSON.parse(getCookie("scoreData") || "[]");
+            if (savedData) {
+                savedData[lineIndex].history.forEach((score, index) => {
                 const item = document.createElement('div');
-                item.textContent = `Lần ${index + 1}: ${score}`;
+                  item.style.padding = '5px';
+                  item.style.margin = '5px';
+                  item.style.boxShadow = '0 4px 8px 0 rgba(0,0,0,0.2)';
+                  item.style.borderRadius = '3px';
+                item.textContent = `♤${index + 1}: ${score}`;
                 historyContent.appendChild(item);
             });
+            } else {
+            historyData[lineIndex].forEach((score, index) => {
+                const item = document.createElement('div');
+                  item.style.padding = '5px';
+                  item.style.margin = '5px';
+                  item.style.boxShadow = '0 4px 8px 0 rgba(0,0,0,0.2)';
+                  item.style.borderRadius = '3px';
+                item.textContent = `♤${index + 1}: ${score}`;
+                historyContent.appendChild(item);
+            });
+        }
 
             document.getElementById('historyPopup').style.display = 'block';
             document.getElementById('overlay').style.display = 'block';
@@ -372,6 +486,11 @@
             const score1 = parseInt(document.getElementById('score1').innerText);
             const score2 = parseInt(document.getElementById('score2').innerText);
             const score3 = parseInt(document.getElementById('score3').innerText);
+            const scoreElement = document.getElementById(`score${currentLine}`);
+            document.getElementById('score0').style.color = score < 0 ? 'red' : 'green';
+            document.getElementById('score1').style.color = score1 < 0 ? 'red' : 'green';
+            document.getElementById('score2').style.color = score2 < 0 ? 'red' : 'green';
+            document.getElementById('score3').style.color = score3 < 0 ? 'red' : 'green';
             result = score + score1 + score2 + score3;
         if (result > 0) {
             notification.textContent = result;
